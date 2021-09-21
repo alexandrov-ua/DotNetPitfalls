@@ -25,9 +25,8 @@ namespace DotNetPitfalls
         [Fact]
         public void Magic()
         {
-            Reverse("Hello world");
-            
-            "Hello world".Should().Be("dlrow olleH");
+            Reverse("Hello world!!");
+            "Hello world!!".Should().Be("!!dlrow olleH");
         }
     }
 }
