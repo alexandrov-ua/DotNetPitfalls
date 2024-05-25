@@ -1,1 +1,1 @@
-This repo is a collection of .Net's tricky momments given as xUnit tests. Have you ever wondered how you can get deadlock in the static constructor or in whitch cases ```this``` keywoard returns ```null```? If you still here check this repo out.
+This repo is a collection of .Net's tricky momments given as xUnit tests. Have you ever wondered how you could ```await 5``` or in which cases ```this``` keyword returns ```null```? Buckle up. There are plenty of such things.
