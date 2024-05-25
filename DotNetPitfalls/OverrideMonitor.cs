@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using DotNetPitfalls;
+using FluentAssertions;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -9,37 +10,39 @@ namespace System.Threading
     {
         public static void Enter(object obj, ref bool taken)
         {
-            (obj as OverrideMonitor)?.OutputHelper.WriteLine("From Enter");
+            if (obj is OverrideMonitor t)
+            {
+                t.Locked = true;
+            }
+
             taken = true;
         }
 
         public static void Exit(object obj)
         {
-            (obj as OverrideMonitor)?.OutputHelper.WriteLine("From Exit");
+            if (obj is OverrideMonitor t)
+            {
+                t.Locked = false;
+            }
         }
     }
 }
-
 
 namespace DotNetPitfalls
 {
     public class OverrideMonitor
     {
-        public readonly ITestOutputHelper OutputHelper;
-
-        public OverrideMonitor(ITestOutputHelper outputHelper)
-        {
-            OutputHelper = outputHelper;
-        }
+        public bool Locked { get; set; } = false;
 
         [Fact]
         public void Magic()
         {
             lock (this)
             {
-                OutputHelper.WriteLine("In lock");
+                Locked.Should().BeTrue();
             }
-        }
-    }    
-}
 
+            Locked.Should().BeFalse();
+        }
+    }
+}
